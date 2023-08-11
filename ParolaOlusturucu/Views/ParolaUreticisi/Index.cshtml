@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Parola Üreticisi";
+}
+
+<h1>Parola Üreticisi</h1>
+
+@*Ajax: sayfa yenilenmeden bilgileri getirmeye yarar *@
+
+<form id="frmParola" class="d-flex align-items-baseline">
+    <label class="me-2" for="uzunluk"> Uzunluk </label>
+    <input class="form-control me-2" id="uzunluk" type="number" value="6" />
+    <button class="btn btn-primary">Üret</button>
+</form>
+
+
+<div class="card mt-3">
+    <div class="card-body">
+        <div id="sonuc" class="text-center fw-bold fs-2">
+            ?
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#frmParola").submit(function(e) {
+            e.preventDefault();
+            let uz = $("#uzunluk").val();
+            let hedefUrl = "@Url.Action("Uret")";
+            $.ajax({
+                 url: hedefUrl,
+                 type: "POST",
+                 data: {uzunluk : uz},
+                 success: function(data) {
+                 $("#sonuc").text(data);
+                 }
+            })
+        });
+
+    </script>
+}
